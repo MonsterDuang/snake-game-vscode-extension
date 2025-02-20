@@ -2,7 +2,7 @@
 	"name": "snake-game-by-monster",
 	"displayName": "Snake Game by Monster",
 	"description": "Anyway! Take a break from development, relax, touch the fish.",
-	"version": "1.0.3",
+	"version": "1.0.5",
 	"publisher": "MonsterDuang",
 	"icon": "images/logo.png",
 	"engines": {
