@@ -16,7 +16,13 @@ export function activate(context: vscode.ExtensionContext) {
 			} // Webview options.
 		);
 
-		panel.webview.html = getSnakeGameContent();
+		panel.webview.html = getSnakeGameContent(context);
+
+		panel.webview.onDidReceiveMessage((message) => {
+			if (message.command === 'updateHighScore') {
+				context.globalState.update('highScore', message.highScore);
+			}
+		});
 	});
 
 	context.subscriptions.push(snakeGameDisposable);
@@ -26,7 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {}
 
 // Function to get the HTML content for the Snake Game
-function getSnakeGameContent(): string {
+function getSnakeGameContent(context: vscode.ExtensionContext): string {
+	const highScore = context.globalState.get('highScore', 0);
 	return `<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -80,6 +87,8 @@ function getSnakeGameContent(): string {
 				padding: 20px;
 				border-radius: 10px;
 				text-align: center;
+				width: 80%;
+				border: 1px solid red;
 			}
 			#newRecord {
 				color: yellow;
@@ -91,7 +100,7 @@ function getSnakeGameContent(): string {
 	<body>
 		<div id="header">
 			<div id="score">Score: 0</div>
-			<div id="highScore">High Score: 0</div>
+			<div id="highScore">High Score: ${highScore}</div>
 		</div>
 		<div id="gameContainer">
 			<canvas id="gameCanvas" width="400" height="400"></canvas>
@@ -107,7 +116,7 @@ function getSnakeGameContent(): string {
 			const grid = 10;
 			let count = 0;
 			let score = 0;
-			let highScore = 0;
+			let highScore = ${highScore};
 			let snake = {
 				x: 160,
 				y: 160,
@@ -184,6 +193,7 @@ function getSnakeGameContent(): string {
 						if (score > highScore) {
 							highScore = score;
 							document.getElementById('highScore').innerText = 'High Score: ' + highScore;
+							vscode.postMessage({ command: 'updateHighScore', highScore: highScore });
 						}
 						placeApple();
 					}
@@ -219,6 +229,8 @@ function getSnakeGameContent(): string {
 
 			placeApple();
 			requestAnimationFrame(loop);
+
+			const vscode = acquireVsCodeApi();
 		</script>
 	</body>
 	</html>`;
