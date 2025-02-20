@@ -2,7 +2,7 @@
 	"name": "snake-game-by-monster",
 	"displayName": "Snake Game by Monster",
 	"description": "Whatever",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"publisher": "MonsterDuang",
 	"icon": "images/logo.png",
 	"engines": {

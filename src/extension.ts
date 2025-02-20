@@ -151,7 +151,7 @@ function getSnakeGameContent(): string {
 				if (gameOver) return;
 
 				requestAnimationFrame(loop);
-				if (++count < 10) { // Increase this value to slow down the snake
+				if (++count < Math.max(10 - Math.floor(snake.maxCells / 5), 1)) { // Adjust speed based on snake length
 					return;
 				}
 				count = 0;
