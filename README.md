@@ -39,10 +39,4 @@
 
 ---
 
-## 遵循扩展指南
-
-确保您已阅读并遵循扩展指南，遵循创建扩展的最佳实践。
-
-* [扩展指南](https://code.visualstudio.com/api/references/extension-guidelines)
-
 **享受吧！**
